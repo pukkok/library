@@ -1,0 +1,38 @@
+#Main{
+    width: 100%;
+    display: flex;
+    min-height: 100vh;
+}
+
+.viewer-nav{
+    width: 250px;
+    border-right: solid 1px grey;
+}
+
+.viewer-nav button{
+    all: unset;
+    box-sizing: border-box;
+    border: solid 1px grey;
+    width: 100%;
+    padding: 10px 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.viewer-nav button:hover{
+    background-color: lightskyblue;
+}
+
+.viewer-data {
+    width: 100%;
+    padding: 10px;
+}
+
+.book-list{
+    display: flex;
+    gap: 5px;
+}
+.book-list div{
+    border: solid 1px #777;
+    padding: 10px;
+}
