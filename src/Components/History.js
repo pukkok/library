@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 function History ({token, BASE_URL}) {
+    
     const [history, setHistory] =useState()
-
+    // 히스토리 조회
     const fetchLog = async () => {
         const historyJSON = await fetch(`${BASE_URL}/api/history/log`, {
             headers : {
@@ -18,10 +19,20 @@ function History ({token, BASE_URL}) {
         fetchLog()
     },[])
 
-    const renew = () => {
-
+    const renewBook = async (isbn) => {
+        const result = await fetch(`${BASE_URL}/api/user-service/book/${isbn}`, {
+            headers : {
+                'Content-Type' : 'application/json',
+                'Authorization' : `Bearer ${token}`
+            },
+            method: 'PUT'
+        })
+        const resultMsg = await result.json()
+        console.log(resultMsg)
+        alert(resultMsg.msg)
     }
 
+    // 책 반납
     const returnBook = async (isbn) => {
         const result = await fetch(`${BASE_URL}/api/user-service/book/${isbn}`, {
             headers : {
@@ -48,8 +59,8 @@ function History ({token, BASE_URL}) {
                         : <p>대출기간 : {deadLineFormat}<span> ({end})</span></p>}
                         <p>상태 : {work}</p>
                         <div className="btn-box">
-                            <button onClick={()=>renew(isbn)}>연장하기</button>
-                            <button onClick={()=>returnBook(isbn, isReturn)}>반납하기</button>
+                            <button onClick={()=>renewBook(isbn)}>연장하기</button>
+                            <button onClick={()=>returnBook(isbn)}>반납하기</button>
                         </div>
                     </div>
                 ) 

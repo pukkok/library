@@ -16,7 +16,7 @@ const BookList = ({token, BASE_URL, admin}) => {
         return setBooks(books)
     }
     
-    const [complete, setComplete] = useState(false)
+    const [borrowed, setBorrowed] = useState()
 
     // 책 대여하기
     async function borrowBook (isbn) {
@@ -30,7 +30,7 @@ const BookList = ({token, BASE_URL, admin}) => {
         })
         .then(res => res.json())
         .then(result=>{
-            if(result.code === 200) setComplete(true)
+            if(result.code === 200) setBorrowed(isbn)
             alert(result.msg)
         })
     }
@@ -76,7 +76,7 @@ const BookList = ({token, BASE_URL, admin}) => {
                 {books && books.map((book, id) => {
                     const { title, summary, release, isbn, author, category } = book
                     return(
-                        <div key={id} className={`item${id}`}>
+                        <div key={id}>
                             <h1>제목 : {title}</h1>
                             <p>줄거리 : {summary}</p>
                             <p>발매일 : {release}</p>
@@ -84,7 +84,7 @@ const BookList = ({token, BASE_URL, admin}) => {
                             <p>저자 : {author}</p>
                             <p>카테고리 : {category}</p>
                             <div className="btn-box">
-                                <button onClick={()=>borrowBook(isbn)}>{complete ? '대여 중' : '책 대여'}</button>
+                                <button onClick={()=>borrowBook(isbn)}>{borrowed===isbn ? '대여 중' : '책 대여'}</button>
                                 {admin && 
                                 <>
                                     <button onClick={()=>modifyBook(isbn)}>책 수정</button>
