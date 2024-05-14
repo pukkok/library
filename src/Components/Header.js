@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 
-function Header ({ userName, admin, isLogin, logoutCheck }) {
+function Header ({ userName, admin, isLogin, logoutCheck, BASE_URL, token }) {
 
     const openPage = (e) => {
         e.preventDefault()
@@ -27,6 +27,17 @@ function Header ({ userName, admin, isLogin, logoutCheck }) {
         logoutCheck(false)
     }
 
+    const deleteMe = async () => {
+        await fetch(`${BASE_URL}/api/users`, {
+            headers : {
+                'Content-Type' : 'application/json',
+                'Authorization' : `Bearer ${token}`
+            },
+            method : 'DELETE'
+        })
+        logout()
+    }
+
     return(
         <header>
             <nav>
@@ -36,7 +47,10 @@ function Header ({ userName, admin, isLogin, logoutCheck }) {
                     {userName ? <p>회원 : {userName} {admin && `(관리자)`}</p> : <p>비회원</p>}
                     <ul>
                         {isLogin ? 
-                            <a href="#none" onClick={logout}>로그아웃</a> :
+                        <>
+                            <a href="#none" onClick={deleteMe}>탈퇴</a> 
+                            <a href="#none" onClick={logout}>로그아웃</a>
+                        </>:
                         <>
                             <li><Link to='/login' onClick={openPage}>로그인</Link></li>
                             <li><Link to='/register' onClick={openPage}>회원가입</Link></li>

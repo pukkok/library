@@ -5,6 +5,7 @@ import LabelBox from "../Components/LabelBox";
 import BorrowedBook from "../Components/BorrowedBook";
 import History from "../Components/History";
 import './styles/MainPage.css'
+import Statistic from "../Components/Statistic";
 
 const arr1 = [
     { name : '타이틀' , id : 'title', type: 'text'},
@@ -44,13 +45,13 @@ function MainPage () {
     }
 
     const [viewer, setViewer] = useState(
-        {addBook : '', view: '', history: ''}
+        {addBook : '', view: '', borrow: '', history: '', stat: ''}
     )
     
     const viewOption = (e) => {
         setViewer({[e.target.name]:'on'})
     }
-    const { addBook, view, borrow, history } = viewer
+    const { addBook, view, borrow, history, stat } = viewer
     
     
     
@@ -83,11 +84,9 @@ function MainPage () {
         setIsLogin(value)
     }
 
-    
-
     return(
         <>
-            <Header userName={userName} admin={admin} isLogin={isLogin} logoutCheck={logoutCheck}/>
+            <Header userName={userName} admin={admin} BASE_URL={BASE_URL} token={token} isLogin={isLogin} logoutCheck={logoutCheck}/>
             {isLogin && 
             <div id="Main">
                 <nav className="viewer-nav">
@@ -96,6 +95,7 @@ function MainPage () {
                         <li><button name="view" onClick={viewOption}>책 조회</button></li>
                         <li><button name="borrow" onClick={viewOption}>대출 목록</button></li>
                         <li><button name="history" onClick={viewOption}>히스토리</button></li>
+                        <li><button name="stat" onClick={viewOption}>취향 집계</button></li>
                     </ul>
                 </nav>
                 <div className="viewer-data">
@@ -111,6 +111,9 @@ function MainPage () {
                     }
                     {viewer && history && 
                         <History token={token} BASE_URL={BASE_URL}></History>
+                    }
+                    {viewer && stat &&
+                        <Statistic token={token} BASE_URL={BASE_URL} admin={admin}></Statistic>
                     }
                 </div>
             </div>}

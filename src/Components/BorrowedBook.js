@@ -3,7 +3,7 @@ import DetailBook from "./DetailBook";
 
 function BorrowedBook ({ token, BASE_URL}) {
 
-    const [bookList, setBookList] = useState()
+    const [bookList, setBookList] = useState([])
 
     // 빌린 책 목록
     const borrowedBookList = async () => {
@@ -70,23 +70,24 @@ function BorrowedBook ({ token, BASE_URL}) {
         borrowedBookList()
     }
 
-    const [open, setOpen] = useState()
+    const [open, setOpen] = useState(false)
+    const [selectedBook, setSelectedBook] = useState(null)
 
-    const openModal = (id) => {
-        setOpen(id)
+    const openModal = (isbn) => {
+        setOpen(true)
+        setSelectedBook(isbn)
     }
 
     const closeModal = () => {
-        setOpen('')
+        setOpen(false)
     }
 
-    console.log(open)
     return(
         <>
-        {bookList && bookList.map((data, id)=>{
+        {bookList.length>0 ? bookList.map((data, id)=>{
             const { title, author, category, isbn } = data
             return(
-                <div key={id} className="borrowed-booklist" onClick={()=>openModal(id)}>
+                <div key={id} className="borrowed-booklist" onClick={()=>openModal(isbn)}>
                     <div>
                         <p>제목 : {title}</p>
                         <p>저자 : {author}</p>
@@ -99,10 +100,10 @@ function BorrowedBook ({ token, BASE_URL}) {
                         <button onClick={(e)=>renewBook(e, isbn)}>연장하기</button>
                         <button onClick={(e)=>returnBook(e, isbn)}>반납하기</button>
                     </div>
-                    {open===id && <DetailBook token={token} BASE_URL={BASE_URL} isbn={isbn} handleClick={closeModal}/>}
                 </div>
             )
-        })}
+        }): '대출 도서가 없습니다'}
+        {open ? <DetailBook token={token} BASE_URL={BASE_URL} isbn={selectedBook} handleClick={closeModal}/> : ''}
 
         </>
     )
