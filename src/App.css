@@ -133,8 +133,10 @@ header ul li:hover a::before{
 }
 
 .history{
+  border: solid 1px grey;
   margin-top: 30px;
   display: flex;
+  flex-direction: column;
   gap: 5px;
 }
 

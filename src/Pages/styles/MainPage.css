@@ -28,11 +28,17 @@
     padding: 10px;
 }
 
+
 .book-list{
-    display: flex;
+    display: grid;
     gap: 5px;
 }
-.book-list div{
+.book-list > div{
     border: solid 1px #777;
     padding: 10px;
+}
+
+.book-list .btn-box{
+    display: flex;
+    gap: 10px;
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import LabelBox from "../Components/LabelBox";
 
 const arr1 = [
@@ -41,8 +41,8 @@ function LoginPage () {
             localStorage.setItem('admin', JSON.stringify(success.isAdmin))
             localStorage.setItem('user', JSON.stringify(success.userId))
             alert('로그인 되었습니다.')
-            window.close()
-            window.opener.location.reload()
+            window.close() // 본인 닫기
+            window.opener.location.reload() // 열었던 창 리로드
         }else{
             alert(success.msg)
         }

@@ -1,6 +1,6 @@
 import React from "react";
 
-function LabelBox({ arr, addClass, handleClick, handleChange, children }) {
+function LabelBox({ arr, addClass, handleClick, handleChange, children, options, optionChange }) {
 
     return(
         <form className={addClass ? addClass : ''}>
@@ -13,6 +13,13 @@ function LabelBox({ arr, addClass, handleClick, handleChange, children }) {
                     </label>
                 )
             })}
+            {options &&
+                <select onChange={optionChange}>
+                    {options.map((option, id)=> {
+                        return <option key={id} value={option}>{option}</option>
+                    })}
+                </select>
+            }
             <button onClick={handleClick}>{children}</button>
         </form>
     )

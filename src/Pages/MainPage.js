@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../Components/Header";
 import BookList from "../Components/BookList";
 import LabelBox from "../Components/LabelBox";
+import History from "../Components/History";
 import './styles/MainPage.css'
 
 const arr1 = [
@@ -23,10 +24,10 @@ function MainPage () {
 
     useEffect(()=>{
         userName && setIsLogin(true)
-    })
+    },[userName])
 
-
-    const book = async (title, summary, release, author, isbn, token) => {
+    // 책 추가하기
+    const book = async (title, summary, release, author, isbn, category, token) => {
         const bookJSON = await fetch(`${BASE_URL}/api/admins/book`, {
             headers : {
                 'Content-Type' : 'application/json',
@@ -34,7 +35,7 @@ function MainPage () {
             },
             method : 'POST',
             body : JSON.stringify({
-                title, summary, release, author, isbn
+                title, summary, release, author, isbn, category
             })
         })
         const book = await bookJSON.json()
@@ -50,18 +51,26 @@ function MainPage () {
     }
     const { addBook, view, history } = viewer
     
-
-    const [input, setInput] = useState()
     
+    
+    const [input, setInput] = useState()
     const valueExtractor = (e) => {
         let {id, value} = e.target
         setInput({...input, [id] : value })
     }
+    
+    const category = ['비문학', '소설', '문학', '자기계발', '요리', '패션', '여행']
+    const [option, setOption] = useState(category[0])
+    const selectOption = (e) => {
+       setOption(e.target.value)
+    }
 
+    // 책 추가하기 버튼
     const starter = async (e) => {
         e.preventDefault()
         const {title, summary, release, author, ISBN} = input
-        let success = await book(title, summary, release, author, ISBN, token)
+        const category = option
+        let success = await book(title, summary, release, author, ISBN, category, token)
         if(success.code === 200){
             alert(success.msg)
         }else{
@@ -73,6 +82,8 @@ function MainPage () {
         setIsLogin(value)
     }
 
+    
+
     return(
         <>
             <Header userName={userName} admin={admin} isLogin={isLogin} logoutCheck={logoutCheck}/>
@@ -80,7 +91,7 @@ function MainPage () {
             <div id="Main">
                 <nav className="viewer-nav">
                     <ul>        
-            {admin && <li><button name="addBook" onClick={viewOption}>책 추가</button></li>}
+              {admin && <li><button name="addBook" onClick={viewOption}>책 추가</button></li>}
                         <li><button name="view" onClick={viewOption}>책 조회</button></li>
                         <li><button name="history" onClick={viewOption}>히스토리</button></li>
                     </ul>
@@ -88,10 +99,13 @@ function MainPage () {
                 <div className="viewer-data">
                     {viewer && addBook && 
                         <LabelBox arr={arr1} addClass={'add-book'} handleChange={valueExtractor}
-                        handleClick={starter}>완료</LabelBox>
+                        handleClick={starter} options={category} optionChange={selectOption}>완료</LabelBox>
                     }
                     {viewer && view && 
-                        <BookList token={token} BASE_URL={BASE_URL}></BookList>
+                        <BookList token={token} BASE_URL={BASE_URL} admin={admin}></BookList>
+                    }
+                    {viewer && history && 
+                        <History token={token} BASE_URL={BASE_URL}></History>
                     }
                 </div>
             </div>}
