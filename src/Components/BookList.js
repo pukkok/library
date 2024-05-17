@@ -30,7 +30,10 @@ const BookList = ({token, BASE_URL, admin}) => {
         })
         .then(res => res.json())
         .then(result=>{
-            if(result.code === 200) setBorrowed(isbn)
+            if(result.code === 200){
+                setBorrowed(isbn)
+            } 
+            
             alert(result.msg)
         })
     }
@@ -48,7 +51,9 @@ const BookList = ({token, BASE_URL, admin}) => {
             })
         })
         .then(res => res.json())
-        .then(result => alert(result.msg))
+        .then(result => {
+            alert(result.msg)
+        })
         // 새로 읽기
         await fetchBookData()
     }
@@ -68,6 +73,7 @@ const BookList = ({token, BASE_URL, admin}) => {
 
     useEffect(()=>{
         fetchBookData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     return(

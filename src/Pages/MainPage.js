@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../Components/Header";
 import BookList from "../Components/BookList";
 import LabelBox from "../Components/LabelBox";
+import BorrowedBook from "../Components/BorrowedBook";
 import History from "../Components/History";
 import './styles/MainPage.css'
 
@@ -49,7 +50,7 @@ function MainPage () {
     const viewOption = (e) => {
         setViewer({[e.target.name]:'on'})
     }
-    const { addBook, view, history } = viewer
+    const { addBook, view, borrow, history } = viewer
     
     
     
@@ -93,6 +94,7 @@ function MainPage () {
                     <ul>        
               {admin && <li><button name="addBook" onClick={viewOption}>책 추가</button></li>}
                         <li><button name="view" onClick={viewOption}>책 조회</button></li>
+                        <li><button name="borrow" onClick={viewOption}>대출 목록</button></li>
                         <li><button name="history" onClick={viewOption}>히스토리</button></li>
                     </ul>
                 </nav>
@@ -103,6 +105,9 @@ function MainPage () {
                     }
                     {viewer && view && 
                         <BookList token={token} BASE_URL={BASE_URL} admin={admin}></BookList>
+                    }
+                    {viewer && borrow && 
+                        <BorrowedBook token={token} BASE_URL={BASE_URL}></BorrowedBook>
                     }
                     {viewer && history && 
                         <History token={token} BASE_URL={BASE_URL}></History>

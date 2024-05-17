@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 
@@ -36,7 +36,7 @@ function Header ({ userName, admin, isLogin, logoutCheck }) {
                     {userName ? <p>회원 : {userName} {admin && `(관리자)`}</p> : <p>비회원</p>}
                     <ul>
                         {isLogin ? 
-                            <a onClick={logout}>로그아웃</a> :
+                            <a href="#none" onClick={logout}>로그아웃</a> :
                         <>
                             <li><Link to='/login' onClick={openPage}>로그인</Link></li>
                             <li><Link to='/register' onClick={openPage}>회원가입</Link></li>

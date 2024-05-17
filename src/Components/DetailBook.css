@@ -1,0 +1,40 @@
+.modal-bg{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    /* display: none; */
+}
+.modal-bg.on{
+    display: block;
+}
+
+.detail-modal{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    background-color: white;
+    border: solid 1px #777;
+    padding: 20px;
+}
+
+.detail-modal h2{
+    display: flex;
+}
+.detail-modal h2 button{
+    margin-left: auto;
+}
+
+.detail-modal p{
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.detail-modal p span{
+    word-wrap: break-word;
+}
+

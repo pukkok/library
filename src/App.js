@@ -3,10 +3,9 @@ import { Route, Routes } from 'react-router-dom';
 import LoginPage from './Pages/LoginPage';
 import MainPage from './Pages/MainPage';
 import RegisterPage from './Pages/RegisterPage';
-import { useState } from 'react';
+import History from './Components/History';
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false)
 
   return (
     <div className="App">
@@ -14,6 +13,7 @@ function App() {
         <Route path='/' element={<MainPage/>}/>
         <Route exact path='/login' element={<LoginPage/>}></Route>
         <Route exact path='/register' element={<RegisterPage/>}></Route>
+        <Route exact path='/history' element={<History/>}></Route>
       </Routes>
     </div>
   )
